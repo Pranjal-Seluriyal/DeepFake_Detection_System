@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepTrust AI Documentation &mdash; Technical Architecture & Forensic Pipeline</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body class="bg-[#050816] text-slate-100 antialiased selection:bg-blue-600 selection:text-white">
+
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 left-0 w-full z-50 border-b border-white/10 bg-[#050816]/80 backdrop-blur-xl">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-purple-600 flex items-center justify-center font-black text-xl text-white shadow-lg shadow-blue-500/30">
+                    DT
+                </div>
+                <div>
+                    <span class="font-extrabold text-xl tracking-tight text-white block">
+                        DeepTrust <span class="text-blue-500">AI</span>
+                    </span>
+                    <span class="text-[10px] uppercase font-bold tracking-widest text-slate-400 -mt-1 block">
+                        Technical Documentation
+                    </span>
+                </div>
+            </a>
+
+            <div class="flex items-center gap-4">
+                <a href="/" class="px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-xs font-bold uppercase tracking-wider text-white transition">
+                    &larr; Back to Portal
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENT WRAPPER -->
+    <main class="max-w-6xl mx-auto px-6 pt-36 pb-24">
+
+        <!-- HEADER -->
+        <div class="mb-16">
+            <div class="inline-flex items-center gap-2 border border-blue-500/30 bg-blue-500/10 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest text-blue-400 mb-6">
+                Technical Specification v2.4
+            </div>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mb-6">
+                DeepTrust AI <br />
+                <span class="text-gradient-cyan">System & Forensic Architecture</span>
+            </h1>
+            <p class="text-slate-400 text-lg leading-relaxed max-w-3xl">
+                DeepTrust AI is a production forensic intelligence platform engineered to detect generative adversarial network (GAN) and diffusion-based synthetic media manipulations across multi-domain representations.
+            </p>
+        </div>
+
+        <!-- 1. OVERVIEW -->
+        <section class="glass-panel rounded-3xl p-8 mb-12 border border-white/10">
+            <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                <span class="w-8 h-8 rounded-lg bg-blue-600/20 text-blue-400 flex items-center justify-center text-sm font-black">1</span>
+                Platform Overview
+            </h2>
+            <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                Traditional convolutional classifiers trained purely on raw RGB pixels quickly overfit to specific generation artifacts and fail against novel generative architectures. DeepTrust AI resolves this limitation by decomposing media into four orthogonal physical and mathematical domains:
+            </p>
+            <div class="grid md:grid-cols-2 gap-4 mt-6">
+                <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
+                    <h3 class="font-bold text-sm text-cyan-400 mb-1">Frequency Domain (2D-FFT)</h3>
+                    <p class="text-xs text-slate-400">Isolates periodic high-frequency patterns and upsampling grid anomalies.</p>
+                </div>
+                <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
+                    <h3 class="font-bold text-sm text-indigo-400 mb-1">Structural Boundary (Canny Edges)</h3>
+                    <p class="text-xs text-slate-400">Measures contour consistency and blending seams around biological features.</p>
+                </div>
+                <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
+                    <h3 class="font-bold text-sm text-purple-400 mb-1">Semantic Coherence (ResNet18)</h3>
+                    <p class="text-xs text-slate-400">Extracts 256-dimensional semantic representations of physical lighting and geometry.</p>
+                </div>
+                <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
+                    <h3 class="font-bold text-sm text-emerald-400 mb-1">Sensor Noise (Laplacian)</h3>
+                    <p class="text-xs text-slate-400">Verifies hardware-level optical sensor noise and acquisition uniformity.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. NEURAL PIPELINE -->
+        <section class="glass-panel rounded-3xl p-8 mb-12 border border-white/10">
+            <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                <span class="w-8 h-8 rounded-lg bg-blue-600/20 text-blue-400 flex items-center justify-center text-sm font-black">2</span>
+                Multi-Branch Image Architecture (ImageDeepfakeDetector)
+            </h2>
+
+            <div class="bg-[#030611] rounded-2xl p-6 font-mono text-xs text-slate-300 overflow-x-auto border border-white/10 mb-6">
+                Input Image (RGB, 128x128)
+                ├── [Branch 1] 2D-FFT Magnitude (1, 128, 128)    ──&gt; SmallCNN(variant='pool2')          ──&gt; Feat 1 (64-dim)
+                ├── [Branch 2] Canny Edge Map (1, 128, 128)      ──&gt; SmallCNN(variant='convconvpool')   ──&gt; Feat 2 (64-dim)
+                ├── [Branch 3] ImageNet RGB (3, 128, 128)        ──&gt; ResNet18Backbone(out_dim=256)      ──&gt; Feat 3 (256-dim)
+                └── [Branch 4] Laplacian Filter (1, 128, 128)    ──&gt; SmallCNN(variant='pool2')          ──&gt; Feat 4 (64-dim)
+                                                                                                                │
+                                                                                        Concatenate (448-dim)   ▼
+                                                                                        AttentionGate(448-dim)  ◄
+                                                                                                │
+                                                                                                ▼
+                                                                                Classifier MLP: 448 &rarr; 256 &rarr; 128 &rarr; 1
+                                                                                                │
+                                                                                                ▼
+                                                                                Sigmoid Score &gt; 0.45 &rarr; "Deepfake"
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-6 text-xs text-slate-300">
+                <div class="space-y-2">
+                    <p class="font-bold text-white text-sm">Feature Dimensions:</p>
+                    <p>&bull; Diffusion Branch: 64 dimensions</p>
+                    <p>&bull; Edge Structural Branch: 64 dimensions</p>
+                    <p>&bull; Semantic ResNet18: 256 dimensions</p>
+                    <p>&bull; Acquisition Laplacian Branch: 64 dimensions</p>
+                    <p>&bull; Concatenated Unified Vector: 448 dimensions</p>
+                </div>
+                <div class="space-y-2">
+                    <p class="font-bold text-white text-sm">Decision Logic:</p>
+                    <p>&bull; Image Threshold: <code class="bg-white/10 px-2 py-0.5 rounded text-blue-400">BEST_THRESH_IMAGE = 0.45</code></p>
+                    <p>&bull; Audio Threshold: <code class="bg-white/10 px-2 py-0.5 rounded text-purple-400">BEST_THRESH_AUDIO = 0.95</code></p>
+                    <p>&bull; Status Formula: <code class="bg-white/10 px-2 py-0.5 rounded text-emerald-400">"Deepfake" if score &gt; threshold else "Real"</code></p>
+                    <p>&bull; Confidence: <code class="bg-white/10 px-2 py-0.5 rounded text-amber-400">round((score if Deepfake else 1 - score) * 100, 2)</code></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. BENCHMARKS -->
+        <section class="glass-panel rounded-3xl p-8 mb-12 border border-white/10">
+            <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                <span class="w-8 h-8 rounded-lg bg-blue-600/20 text-blue-400 flex items-center justify-center text-sm font-black">3</span>
+                Empirical Evaluation & Performance
+            </h2>
+
+            <div class="grid sm:grid-cols-3 gap-6 mb-6">
+                <div class="glass-card rounded-2xl p-6 text-center border border-emerald-500/20">
+                    <div class="text-4xl font-black text-emerald-400 mb-1">94.05%</div>
+                    <div class="text-xs uppercase font-bold tracking-wider text-slate-400">Test Accuracy</div>
+                </div>
+                <div class="glass-card rounded-2xl p-6 text-center border border-blue-500/20">
+                    <div class="text-4xl font-black text-blue-400 mb-1">97.12%</div>
+                    <div class="text-xs uppercase font-bold tracking-wider text-slate-400">ROC-AUC Score</div>
+                </div>
+                <div class="glass-card rounded-2xl p-6 text-center border border-purple-500/20">
+                    <div class="text-4xl font-black text-purple-400 mb-1">94.57%</div>
+                    <div class="text-xs uppercase font-bold tracking-wider text-slate-400">F1 Score</div>
+                </div>
+            </div>
+
+            <p class="text-xs text-slate-400 leading-relaxed">
+                Trained and evaluated on FaceForensics++ and the 140K Real vs Fake Faces dataset under diverse compression regimes (Raw, c23, c40) and cross-generator evaluation (StyleGAN2, ProGAN, Latent Diffusion).
+            </p>
+        </section>
+
+        <!-- 4. REST API SPECIFICATION -->
+        <section class="glass-panel rounded-3xl p-8 border border-white/10">
+            <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                <span class="w-8 h-8 rounded-lg bg-blue-600/20 text-blue-400 flex items-center justify-center text-sm font-black">4</span>
+                REST API Endpoints
+            </h2>
+
+            <div class="space-y-6 text-xs">
+                <!-- Endpoint 1 -->
+                <div class="bg-white/5 p-5 rounded-2xl border border-white/5">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="px-2.5 py-1 rounded bg-blue-600 font-mono font-bold text-white text-[11px]">POST</span>
+                        <span class="font-mono text-sm font-bold text-slate-200">/api/predict/image</span>
+                    </div>
+                    <p class="text-slate-400 mb-3">Accepts multipart file upload (<code class="text-blue-300">file</code>) or JSON with base64 data (<code class="text-blue-300">image</code>). Runs multi-branch image model, persists to PostgreSQL & Cloudinary, and returns prediction.</p>
+                </div>
+
+                <!-- Endpoint 2 -->
+                <div class="bg-white/5 p-5 rounded-2xl border border-white/5">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="px-2.5 py-1 rounded bg-purple-600 font-mono font-bold text-white text-[11px]">POST</span>
+                        <span class="font-mono text-sm font-bold text-slate-200">/api/predict/audio</span>
+                    </div>
+                    <p class="text-slate-400 mb-3">Accepts audio files (<code class="text-purple-300">file</code>). Evaluates acoustic mel-spectrogram through CNN + BiLSTM attention network.</p>
+                </div>
+
+                <!-- Endpoint 3 -->
+                <div class="bg-white/5 p-5 rounded-2xl border border-white/5">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="px-2.5 py-1 rounded bg-emerald-600 font-mono font-bold text-white text-[11px]">GET</span>
+                        <span class="font-mono text-sm font-bold text-slate-200">/api/predictions</span>
+                    </div>
+                    <p class="text-slate-400 mb-3">Retrieves historical predictions stored in PostgreSQL database with optional <code class="text-emerald-300">limit</code> and <code class="text-emerald-300">type</code> query filters.</p>
+                </div>
+
+                <!-- Endpoint 4 -->
+                <div class="bg-white/5 p-5 rounded-2xl border border-white/5">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="px-2.5 py-1 rounded bg-slate-700 font-mono font-bold text-white text-[11px]">GET</span>
+                        <span class="font-mono text-sm font-bold text-slate-200">/api/health</span>
+                    </div>
+                    <p class="text-slate-400 mb-3">Returns real-time health telemetry including database connectivity, loaded neural models, and storage backend provider.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-white/10 py-12 bg-[#030611] text-center text-xs text-slate-500">
+        &copy; 2026 DeepTrust AI. Production Deepfake & Synthetic Media Forensic System.
+    </footer>
+
+</body>
+</html>

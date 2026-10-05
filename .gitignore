@@ -1,0 +1,70 @@
+# Model weights and checkpoints (fetched from Hugging Face at runtime)
+*.pth
+*.pt
+*.ckpt
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyd
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# Database files
+*.sqlite
+*.sqlite3
+*.db
+predictions.db
+
+# Uploads directory (keep directory via .gitkeep)
+uploads/*
+!uploads/.gitkeep
+
+# Temporary and Scratch files
+scratch/
+tempCodeRunnerFile.py
+*.log
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# IDE configurations
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+

@@ -1,0 +1,37 @@
+# Exclude model weights to keep Docker build context light (~2.44GB excluded)
+# Model weights are fetched from Hugging Face at container startup
+*.pth
+*.pt
+*.ckpt
+models/ucfnet/*.pth
+models/old_image_model_backup/*.pt
+
+# Version control & environments
+.git
+.gitignore
+.env
+.env.*
+.venv/
+venv/
+ENV/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Database & uploads
+*.sqlite
+*.sqlite3
+*.db
+predictions.db
+uploads/*
+!uploads/.gitkeep
+
+# Vercel & IDE
+.vercel
+.vscode/
+.idea/
+scratch/
+*.log
